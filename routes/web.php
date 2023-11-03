@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/blog')->group(function () {
 // get
 Route::get('/', [PostsController::class, 'index'])->name('blog.index');
-Route::get('/{id}', [PostsController::class, 'show'])->name('blog.show');
-
 // post
 Route::get('/create', [PostsController::class, 'create'])->name('blog.create');
+Route::get('/{id}', [PostsController::class, 'show'])->name('blog.show');
+
 Route::post('/', [PostsController::class, 'store'])->name('blog.store');
 
 // put or patch
