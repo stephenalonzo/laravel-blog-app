@@ -34,6 +34,17 @@
         </div>
     </div>
 
+    @if (session()->has('message'))
+        <div class="mx-auto w-4/5 pb-10">
+            <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                Warning
+            </div>
+            <div class="border border-t-1 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                {{ session()->get('message') }}
+            </div>
+        </div>
+    @endif
+
     @foreach ($posts as $post)
 
     <div class="w-4/5 mx-auto pb-10">
@@ -46,7 +57,7 @@
                 </h2>
 
                 <p class="text-gray-900 text-lg py-8 w-full break-words">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa maiores nisi quasi tenetur voluptatem! At blanditiis dolor doloremque eaque, esse molestiae neque numquam quod repellat rerum sequi sit suscipit veritatis!
+                    {{ $post->excerpt }}
                 </p>
 
                 <span class="text-gray-500 text-sm sm:text-base">
@@ -57,6 +68,16 @@
                         </a>
                     on 13-07-2022
                 </span>
+
+                <a href="{{ route('blog.edit', $post->id) }}"
+                    class="block italic text-green-500 border-b-1 border-green-400">
+                    Edit
+                </a>
+                <form action="{{ route('blog.destroy', $post->id) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button class="pt-3 text-red-500 pr-3">Delete</button>
+                </form>
             </div>
         </div>
     </div>
