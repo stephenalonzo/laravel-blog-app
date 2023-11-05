@@ -1,38 +1,28 @@
 <?php
 
-use App\Http\Controllers\FallbackController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostsController;
 
 /*
-    get - request resource
-    post - store resource
-    put - edit resource (modify every single value in single row)
-    patch - modify resource (only modifies values that have been changed)
-    destroy - delete resource
-    options - ask serve what verbs allowed
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
 */
 
-Route::prefix('/blog')->group(function () {
-// get
-Route::get('/', [PostsController::class, 'index'])->name('blog.index');
-// post
-Route::get('/create', [PostsController::class, 'create'])->name('blog.create');
-Route::get('/{id}', [PostsController::class, 'show'])->name('blog.show');
-
-Route::post('/', [PostsController::class, 'store'])->name('blog.store');
-
-// put or patch
-Route::get('/edit/{id}', [PostsController::class, 'edit'])->name('blog.edit');
-Route::patch('/{id}', [PostsController::class, 'update'])->name('blog.update');
-
-Route::delete('/{id}', [PostsController::class, 'destroy'])->name('blog.destroy');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-// Route::resource('blog', PostsController::class);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-// invoke
-Route::get('/', HomeController::class);
+Route::resource('blog', PostsController::class);
 
-Route::fallback(FallbackController::class);
+require __DIR__.'/auth.php';
+
